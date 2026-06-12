@@ -1,0 +1,7 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300">
+  <rect width="300" height="300" fill="#0a1628"/>
+  <circle cx="150" cy="110" r="55" fill="#00ffc822" stroke="#00ffc8" stroke-width="2"/>
+  <ellipse cx="150" cy="230" rx="80" ry="50" fill="#00ffc811" stroke="#00ffc8" stroke-width="2"/>
+  <text x="150" y="118" text-anchor="middle" fill="#00ffc8" font-size="48" font-family="Arial">👤</text>
+  <text x="150" y="285" text-anchor="middle" fill="#00ffc888" font-size="12" font-family="Courier New">Ganti dengan foto Anda</text>
+</svg>
