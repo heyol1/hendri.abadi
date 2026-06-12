@@ -315,7 +315,7 @@ export default {
     const activeNav     = ref('hero')
     const photoError    = ref(false)
     const photoError2   = ref(false)
-    const photoSrc      = ref('/images/profile.jpg')
+    const photoSrc      = ref(import.meta.env.BASE_URL + 'images/profile.jpg')
 
     // ── Hero Stats ────────────────────────────────────────────
     const heroStats = ref([
