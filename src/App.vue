@@ -567,9 +567,9 @@ export default {
     const scrollTo = (section) => {
       activeNav.value = section
       gsap.to(window, {
-        duration: 1.5,
+        duration: 0.6,
         scrollTo: { y: `#${section}`, offsetY: 80 },
-        ease: 'power3.inOut'
+        ease: 'power2.inOut'
       })
     }
 
