@@ -48,9 +48,9 @@
         </div>
 
         <div class="hologram">
-          <div class="hologram-title">IT INFRASTRUCTURE SPECIALIST</div>
+          <div class="hologram-title">IT INFRASTRUCTURE · SYSTEM ADMIN · IT SUPPORT</div>
           <h1 class="main-title">HENDRI ABADI</h1>
-          <div class="command-subtitle">Profesional IT Infrastructure | 3+ Tahun Pengalaman</div>
+          <div class="command-subtitle">Profesional IT Infrastructure & Support | 4+ Tahun Pengalaman</div>
           <div class="hero-contact-info">
             <span>📱 081384681806</span>
             <span>✉️ abadi.hendri140@gmail.com</span>
@@ -99,8 +99,8 @@
           </div>
           <div class="about-content-side">
             <div class="about-summary">
-              <p>Profesional IT Infrastructure dengan lebih dari <strong>3 tahun pengalaman</strong> dalam pengelolaan jaringan dan server. Berpengalaman dalam instalasi software, jaringan infrastruktur serta konfigurasi perangkat jaringan <strong>(Cisco, Mikrotik)</strong>, virtualisasi menggunakan <strong>VMware, NAS dan SAN</strong>.</p>
-              <p>Terbiasa menangani monitoring sistem, backup & recovery, dan pengamanan jaringan untuk menjaga stabilitas dan performa infrastruktur TI perusahaan. Memiliki kemampuan troubleshooting yang cepat dan efektif, serta terbiasa bekerja dalam tim lintas departemen.</p>
+              <p>Profesional <strong>IT Infrastructure, System Administrator dan IT Support</strong> dengan pengalaman lebih dari <strong>4 tahun</strong> dalam pengelolaan infrastruktur TI, jaringan, server, storage, dan dukungan operasional perusahaan.</p>
+              <p>Berpengalaman menangani administrasi <strong>Windows Server, Active Directory, VMware, Backup & Recovery, NAS/SAN, VPN antar cabang</strong>, serta troubleshooting hardware dan software. Memiliki kemampuan pengembangan aplikasi berbasis <strong>Laravel dan PHP</strong> yang telah digunakan aktif dalam operasional perusahaan.</p>
             </div>
             <div class="education-box">
               <div class="edu-header">🎓 PENDIDIKAN</div>
@@ -147,6 +147,75 @@
         </div>
       </div>
     </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects-section">
+      <div class="section-container">
+        <h2 class="section-title">PROJECT MODULES</h2>
+        <p class="section-subtitle">Pengalaman Pengembangan Aplikasi</p>
+        <div class="projects-grid">
+          <div class="project-card" v-for="proj in projects" :key="proj.name">
+            <div class="project-header">
+              <span class="project-icon">{{ proj.icon }}</span>
+              <div>
+                <div class="project-name">{{ proj.name }}</div>
+                <div class="project-tags">
+                  <span class="tag" v-for="t in proj.tech" :key="t">{{ t }}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Image Slider -->
+            <div class="slider-wrapper">
+              <div class="slider-track" :style="{ transform: `translateX(-${proj.currentSlide * 100}%)` }">
+                <div class="slide" v-for="(img, i) in proj.images" :key="i">
+                  <img
+                    :src="img"
+                    :alt="proj.name + ' screenshot ' + (i+1)"
+                    class="slide-img"
+                    @click="openLightbox(img, proj.name + ' - screenshot ' + (i+1))"
+                    @error="$event.target.parentElement.classList.add('slide-error')"
+                  />
+                  <div class="slide-placeholder">
+                    <span>🖼️</span>
+                    <small>Tambahkan foto ke<br>public/images/projects/{{ proj.name === 'IT Management System (ITMS)' ? 'itms' : 'gateway' }}/{{ i+1 }}.jpg</small>
+                  </div>
+                  <div class="slide-zoom-hint">🔍 Klik untuk zoom</div>
+                </div>
+              </div>
+
+              <!-- Prev / Next buttons -->
+              <button class="slider-btn slider-prev" @click="slideProject(proj, -1)" v-if="proj.images.length > 1">&#8249;</button>
+              <button class="slider-btn slider-next" @click="slideProject(proj,  1)" v-if="proj.images.length > 1">&#8250;</button>
+
+              <!-- Dots -->
+              <div class="slider-dots" v-if="proj.images.length > 1">
+                <span
+                  v-for="(_, i) in proj.images" :key="i"
+                  :class="['dot', proj.currentSlide === i ? 'active' : '']"
+                  @click="proj.currentSlide = i"
+                ></span>
+              </div>
+            </div>
+
+            <p class="project-desc">{{ proj.description }}</p>
+            <div class="project-modules-label">Modul:</div>
+            <ul class="project-modules">
+              <li v-for="m in proj.modules" :key="m">{{ m }}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div class="lightbox-overlay" v-if="lightbox.visible" @click.self="closeLightbox">
+      <div class="lightbox-container">
+        <button class="lightbox-close" @click="closeLightbox">✕</button>
+        <img :src="lightbox.src" :alt="lightbox.alt" class="lightbox-img" />
+        <div class="lightbox-caption">{{ lightbox.alt }}</div>
+      </div>
+    </div>
 
     <!-- Skills Section -->
     <section id="services" class="skills-section">
@@ -281,7 +350,7 @@
             </svg>
           </a>
         </div>
-        <p>HENDRI ABADI™ | IT Infrastructure Specialist | Jakarta</p>
+        <p>HENDRI ABADI™ | IT Infrastructure and IT Support Specialist | Jakarta</p>
         <p>📱 081384681806 &nbsp;|&nbsp; ✉️ abadi.hendri140@gmail.com</p>
         <p class="footer-tech">Built with Vue.js & GSAP</p>
       </div>
@@ -320,7 +389,7 @@ export default {
     // ── Hero Stats ────────────────────────────────────────────
     const heroStats = ref([
       { label: 'PENGALAMAN', value: '4+ Tahun' },
-      { label: 'SERTIFIKASI', value: '3 Certs' },
+      { label: 'SERTIFIKASI', value: '2 Certs' },
       { label: 'IPK', value: '3.87' }
     ])
 
@@ -329,25 +398,24 @@ export default {
       {
         icon: '🚀',
         title: 'PENGALAMAN',
-        description: 'Profesional IT Infrastructure 3+ tahun: jaringan, server, Cisco & Mikrotik di perusahaan asuransi dan keuangan.'
+        description: 'IT Infrastructure, System Administrator & IT Support 4+ tahun: jaringan, server, VMware, VPN antar cabang di perusahaan asuransi dan keuangan.'
       },
       {
         icon: '⚡',
         title: 'KEAHLIAN',
-        description: 'Spesialis VMware, NAS/SAN, Active Directory, CCTV/NVR, monitoring, backup & recovery, VPN L2TP/SSTP.'
+        description: 'Spesialis Windows Server, Active Directory, VMware, NAS/SAN, Backup & Recovery, DRC, VPN L2TP/SSTP, cPanel, Helpdesk Ticketing.'
       },
       {
-        icon: '🔐',
-        title: 'SERTIFIKASI',
-        description: 'CCNA · Networking Administrasi Madya · BSI Entrepreneur — fokus infrastruktur aman & performa optimal.'
+        icon: '�',
+        title: 'DEVELOPMENT',
+        description: 'Pengembang aplikasi Laravel & PHP — ITMS (Helpdesk, Asset Management) dan Gateway System (Meeting Room, Log IT, Arsip Digital).'
       }
     ])
 
     // ── Certifications ────────────────────────────────────────
     const certifications = ref([
       'CCNA',
-      'Networking Administrasi Madya',
-      'BSI Entrepreneur'
+      'Networking Administrasi Madya'
     ])
 
     // ── Experience (Timeline) ─────────────────────────────────
@@ -355,19 +423,18 @@ export default {
       {
         title: 'IT Infrastructure',
         company: 'PT. Asuransi Cakrawala Proteksi Indonesia',
-        period: 'November 2023 – Sekarang',
+        period: 'November 2023 – Mei 2026',
         duties: [
-          'Troubleshooting peripheral IT',
-          'Check jaringan secara berkala',
-          'Koordinasi keamanan server',
-          'Backup server by remote',
-          'Backup CCTV (NVR, HDR)',
-          'Setting jaringan cabang',
-          'Pengecekan Mikrotik Log',
-          'Setting Mikrotik cabang via VPN L2TP/SSTP',
-          'Setting email new user & kelola email lokal/eksternal',
-          'Koordinasi terkait vendor',
-          'Controller Active Directory & File Sharing'
+          'Mengelola dan memelihara infrastruktur jaringan menggunakan Mikrotik dan perangkat jaringan lainnya',
+          'Monitoring, troubleshooting, dan optimasi jaringan untuk menjaga stabilitas layanan TI',
+          'Mengelola Active Directory, Domain Controller, File Sharing, serta akun pengguna',
+          'Mengelola Windows Server, email server, dan layanan email internal maupun eksternal',
+          'Backup & recovery server, NAS, SAN, serta implementasi Disaster Recovery Center (DRC)',
+          'Konfigurasi VPN L2TP dan SSTP antar kantor cabang',
+          'Mengelola sistem CCTV, NVR, DVR termasuk backup data rekaman',
+          'Helpdesk ticketing serta troubleshooting hardware, software, printer',
+          'Koordinasi dengan vendor terkait pengadaan dan pemeliharaan infrastruktur TI',
+          'Maintenance website perusahaan dan pengelolaan hosting berbasis cPanel'
         ]
       },
       {
@@ -375,47 +442,124 @@ export default {
         company: 'PT. Pusat Gadai Indonesia',
         period: 'Juni 2022 – Oktober 2023',
         duties: [
-          'Troubleshooting per Area Manager',
-          'Troubleshooting di kantor pusat',
-          'Setting CCTV & konfigurasi CCTV cabang agar bisa diakses di kantor',
-          'Setting Mikrotik (DHCP, Statis, Load Balancing, Layer 7)'
+          'Dukungan teknis kepada pengguna dan Area Manager terkait hardware, software, dan jaringan',
+          'Troubleshooting serta pemeliharaan perangkat komputer dan jaringan kantor',
+          'Konfigurasi dan monitoring CCTV cabang agar dapat diakses dari kantor pusat',
+          'Konfigurasi Mikrotik: DHCP, Static Routing, Load Balancing, dan Layer 7 Filtering',
+          'Implementasi jaringan dan perangkat pendukung operasional cabang'
         ]
-      },
+      }
     ])
 
+    // ── Projects ──────────────────────────────────────────────
+    const projects = ref([
+      {
+        icon: '🖥️',
+        name: 'IT Management System (ITMS)',
+        tech: ['Laravel', 'PHP', 'MySQL'],
+        description: 'Aplikasi IT Management System berbasis Laravel untuk mendukung operasional internal perusahaan.',
+        modules: ['Helpdesk Ticketing', 'Asset Management', 'Monitoring', 'Pelaporan IT'],
+        images: [
+          import.meta.env.BASE_URL + 'images/projects/itms/1.jpg',
+          import.meta.env.BASE_URL + 'images/projects/itms/2.jpg',
+          import.meta.env.BASE_URL + 'images/projects/itms/3.jpg',
+          import.meta.env.BASE_URL + 'images/projects/itms/4.jpg',
+          import.meta.env.BASE_URL + 'images/projects/itms/5.jpg',
+          import.meta.env.BASE_URL + 'images/projects/itms/6.jpg',
+          import.meta.env.BASE_URL + 'images/projects/itms/7.jpg',
+          import.meta.env.BASE_URL + 'images/projects/itms/8.jpg',
+          import.meta.env.BASE_URL + 'images/projects/itms/9.jpg',
+          import.meta.env.BASE_URL + 'images/projects/itms/10.jpg',
+          import.meta.env.BASE_URL + 'images/projects/itms/11.jpg',
+          import.meta.env.BASE_URL + 'images/projects/itms/12.jpg',
+          import.meta.env.BASE_URL + 'images/projects/itms/13.jpg',
+          import.meta.env.BASE_URL + 'images/projects/itms/14.jpg',
+          import.meta.env.BASE_URL + 'images/projects/itms/15.jpg',
+          import.meta.env.BASE_URL + 'images/projects/itms/16.jpg',
+          import.meta.env.BASE_URL + 'images/projects/itms/17.jpg',
+          import.meta.env.BASE_URL + 'images/projects/itms/18.jpg',
+          import.meta.env.BASE_URL + 'images/projects/itms/19.jpg',
+          import.meta.env.BASE_URL + 'images/projects/itms/20.jpg',
+          import.meta.env.BASE_URL + 'images/projects/itms/21.jpg',
+          import.meta.env.BASE_URL + 'images/projects/itms/22.jpg',
+          import.meta.env.BASE_URL + 'images/projects/itms/23.jpg',
+          import.meta.env.BASE_URL + 'images/projects/itms/24.jpg',
+          import.meta.env.BASE_URL + 'images/projects/itms/25.jpg',
+          import.meta.env.BASE_URL + 'images/projects/itms/26.jpg',
+          import.meta.env.BASE_URL + 'images/projects/itms/27.jpg'
+
+        ],
+        currentSlide: 0
+      },
+      {
+        icon: '🌐',
+        name: 'Gateway System',
+        tech: ['Laravel', 'PHP', 'MySQL','Vue.js'],
+        description: 'Portal layanan internal perusahaan yang mengintegrasikan berbagai layanan operasional dalam satu platform.',
+        modules: ['Pemesanan Ruang Rapat', 'Log IT', 'Arsip Digital', 'Buku Tamu Digital'],
+        images: [
+          import.meta.env.BASE_URL + 'images/projects/gateway/1.jpg',
+          import.meta.env.BASE_URL + 'images/projects/gateway/2.jpg',
+          import.meta.env.BASE_URL + 'images/projects/gateway/3.jpg',
+          import.meta.env.BASE_URL + 'images/projects/gateway/4.jpg',
+          import.meta.env.BASE_URL + 'images/projects/gateway/5.jpg',
+          import.meta.env.BASE_URL + 'images/projects/gateway/6.jpg',
+          import.meta.env.BASE_URL + 'images/projects/gateway/7.jpg'
+        ],
+        currentSlide: 0
+      }
+    ])
+
+    // ── Lightbox ──────────────────────────────────────────────
+    const lightbox = ref({ visible: false, src: '', alt: '' })
+
+    const openLightbox = (src, alt) => {
+      lightbox.value = { visible: true, src, alt }
+      document.body.style.overflow = 'hidden'
+    }
+
+    const closeLightbox = () => {
+      lightbox.value.visible = false
+      document.body.style.overflow = ''
+    }
+
+    const slideProject = (proj, dir) => {
+      const len = proj.images.length
+      proj.currentSlide = (proj.currentSlide + dir + len) % len
+    }
     // ── Skills ────────────────────────────────────────────────
     const skills = ref([
-      { name: 'Network Administration (Cisco / Mikrotik)', level: 92 },
-      { name: 'Windows Server & Active Directory',         level: 90 },
-      { name: 'VMware / Virtualisasi',                     level: 85 },
-      { name: 'NAS & SAN Setup',                           level: 85 },
-      { name: 'CCTV / NVR / DVR / HDR',                   level: 90 },
-      { name: 'Troubleshooting Hardware & Software',       level: 95 },
-      { name: 'Backup & Recovery',                         level: 88 },
-      { name: 'PHP / HTML / MySQL',                        level: 75 }
+      { name: 'Network Administration (Mikrotik / Cisco)',  level: 92 },
+      { name: 'Windows Server & Active Directory',          level: 92 },
+      { name: 'VMware / Virtualisasi',                      level: 85 },
+      { name: 'NAS & SAN / Backup & Recovery / DRC',        level: 87 },
+      { name: 'Helpdesk Ticketing & User Support',          level: 93 },
+      { name: 'Troubleshooting Hardware & Software',        level: 95 },
+      { name: 'Laravel / PHP / MySQL',                      level: 80 },
+      { name: 'cPanel / Hosting / Website Maintenance',     level: 82 }
     ])
 
     // ── Tool Groups (Tags) ────────────────────────────────────
     const toolGroups = ref([
       {
-        label: '🛠 TOOLS',
-        items: ['VMware', 'Cisco', 'Mikrotik', 'Windows Server', 'PABX', 'CCTV', 'NVR', 'DVR', 'HDR', 'Windows Live Mail']
+        label: '� INFRASTRUCTURE & SYSTEM',
+        items: ['Windows Server', 'Active Directory', 'Domain Controller', 'File Server', 'DNS', 'DHCP', 'Group Policy', 'User Management']
       },
       {
-        label: '💻 HARD SKILLS',
-        items: ['Setup Jaringan', 'Windows Server Setup', 'NAS/SAN', 'Domain Controller', 'VPN L2TP/SSTP', 'Active Directory']
+        label: '🌐 NETWORK VIRTUALIZATION & STORAGE',
+        items: ['Mikrotik', 'Cisco', 'VPN', 'Routing', 'Load Balancing', 'VLAN', 'VMware', 'NAS', 'SAN']
       },
       {
-        label: '🧠 SOFT SKILLS',
-        items: ['Troubleshooting', 'Manajemen Waktu', 'Komunikatif', 'Team Work', 'Backup Server']
+        label: '📧 HOSTING & EMAIL',
+        items: ['cPanel', 'Email Hosting', 'Domain Management', 'Website Maintenance']
       },
       {
-        label: '💾 PROGRAMMING',
-        items: ['PHP', 'HTML', 'MySQL', 'Bootstrap', 'CodeIgniter']
+        label: '� SUPPORT & OPERATIONS',
+        items: ['Helpdesk Ticketing', 'Hardware Troubleshooting', 'Software Troubleshooting', 'Network Troubleshooting', 'User Support', 'Backup & Recovery', 'DRC', 'CCTV', 'NVR', 'DVR']
       },
       {
-        label: '🌐 BAHASA',
-        items: ['Bahasa Indonesia', 'Bahasa Inggris']
+        label: '💾 PROGRAMMING & FRAMEWORK',
+        items: ['Laravel', 'PHP', 'HTML', 'MySQL', 'Bootstrap', 'CodeIgniter']
       }
     ])
 
@@ -487,6 +631,11 @@ export default {
 
     // ── onMounted ─────────────────────────────────────────────
     onMounted(() => {
+      // ESC untuk tutup lightbox
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeLightbox()
+      })
+
       // Starfield
       const canvas = document.getElementById('space-canvas')
       if (canvas) {
@@ -552,7 +701,8 @@ export default {
     return {
       form, submitForm, submitMessage, submitStatus, isSending,
       activeNav, heroStats, profileItems, certifications,
-      experiences, skills, toolGroups,
+      experiences, skills, toolGroups, projects,
+      lightbox, openLightbox, closeLightbox, slideProject,
       scrollTo, photoError, photoError2, photoSrc
     }
   }
