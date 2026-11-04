@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 430">
+  <defs>
+    <linearGradient id="footer" x1="0" x2="1"><stop stop-color="#071624"/><stop offset="1" stop-color="#0d3654"/></linearGradient>
+    <pattern id="mesh" width="42" height="42" patternUnits="userSpaceOnUse"><path d="M21 0 42 21 21 42 0 21Z" fill="none" stroke="#fff" stroke-opacity=".045"/></pattern>
+  </defs>
+  <rect width="1600" height="430" fill="url(#footer)"/><rect width="1600" height="430" fill="url(#mesh)"/>
+  <path d="M0 72C280 20 390 120 650 78s360-64 520-15 240 14 430-43" fill="none" stroke="#f4b638" stroke-width="5"/>
+  <g transform="translate(106 142)">
+    <circle cx="68" cy="68" r="62" fill="#123d5c" stroke="#f4b638" stroke-width="5"/>
+    <path d="M38 85c-8-12-12-26-12-41 0-24 19-43 43-43s43 19 43 43c0 15-5 29-13 41M42 89h54M56 108h26" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round"/>
+    <path d="M69 18v41l-16 13m16-13 16 13" fill="none" stroke="#f4b638" stroke-width="8" stroke-linecap="round"/>
+  </g>
+  <text x="285" y="186" fill="#fff" font-family="Arial,sans-serif" font-size="43" font-weight="800" letter-spacing="2">MECHATRONIC AUTO GARAGE</text>
+  <text x="285" y="232" fill="#f4b638" font-family="Arial,sans-serif" font-size="24" font-weight="700">PERAWATAN • PERBAIKAN • MODIFIKASI</text>
+  <text x="285" y="288" fill="#d8eaf3" font-family="Arial,sans-serif" font-size="22">Jl. Pondok Cabe Raya No. 101, Pamulang, Tangerang Selatan</text>
+  <text x="285" y="326" fill="#d8eaf3" font-family="Arial,sans-serif" font-size="20">Melayani mobil tua hingga teknologi Hybrid dan EV</text>
+  <text x="285" y="376" fill="#fff" font-family="Arial,sans-serif" font-size="18" opacity=".8">© 2016–2026 Mechatronic Auto Garage</text>
+</svg>
